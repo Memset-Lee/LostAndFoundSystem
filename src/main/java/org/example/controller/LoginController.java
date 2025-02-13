@@ -3,8 +3,10 @@ package org.example.controller;
 import org.example.pojo.Result;
 import org.example.pojo.User;
 import org.example.service.impl.LoginServiceImpl;
+import org.example.service.impl.UserServiceImpl;
 import org.example.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -15,10 +17,19 @@ public class LoginController {
     @Autowired
     private LoginServiceImpl loginServiceImpl;
 
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
+
     @PostMapping("/api/login")
     public Result login(@RequestBody User user) {
         Integer num = loginServiceImpl.login(user.getUsername(), user.getPassword());
         if (num != 0) {
+            String key = user.getUsername();
+            User value = userServiceImpl.personalhome(key);
+            redisTemplate.opsForValue().set(key, value);
             Map<String, Object> map = new HashMap<>();
             map.put("username", user.getUsername());
             return Result.success(JwtUtils.generateJwt(map));

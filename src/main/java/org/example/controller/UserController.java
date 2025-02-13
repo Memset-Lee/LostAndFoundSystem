@@ -7,6 +7,7 @@ import org.example.service.impl.UserServiceImpl;
 import org.example.utils.AliOSSUtils;
 import org.example.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +20,9 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private RedisTemplate<String, User> redisTemplate;
 
     @Autowired
     private AliOSSUtils aliOSSUtils;
@@ -41,7 +45,8 @@ public class UserController {
     public Result personalhome(@RequestHeader String token) {
         Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
-        User user = userServiceImpl.personalhome(username);
+        User user = redisTemplate.opsForValue().get(username);
+        //User user = userServiceImpl.personalhome(username);
         return Result.success(user);
     }
 
@@ -55,8 +60,19 @@ public class UserController {
         String username = claims.get("username").toString();
         String newAvatarUrl = aliOSSUtils.upload(newAvatar);
         userServiceImpl.update(username, newUsername, newPassword, newPhone, newAvatarUrl);
+        User newuser = new User(newUsername, newPassword, newPhone, newAvatarUrl);
+        redisTemplate.delete(username);
+        redisTemplate.opsForValue().set(newUsername, newuser);
         Map<String, Object> map = new HashMap<>();
         map.put("username", newUsername);
         return Result.success(JwtUtils.generateJwt(map));
+    }
+
+    @PostMapping("/api/logout")
+    public Result logout(@RequestHeader String token) {
+        Claims claims = JwtUtils.parseJwt(token);
+        String username = claims.get("username").toString();
+        redisTemplate.delete(username);
+        return Result.success();
     }
 }

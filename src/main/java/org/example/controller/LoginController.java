@@ -21,7 +21,7 @@ public class LoginController {
     private UserServiceImpl userServiceImpl;
 
     @Autowired
-    RedisTemplate<String, Object> redisTemplate;
+    RedisTemplate<String, User> redisTemplate;
 
     @PostMapping("/api/login")
     public Result login(@RequestBody User user) {

@@ -49,7 +49,6 @@ public class LogAspect {
 
         //调用原始目标方法
         Object result = joinPoint.proceed();
-        System.out.println("111");
         //记录原始目标方法结束时间
         long end = System.currentTimeMillis();
 

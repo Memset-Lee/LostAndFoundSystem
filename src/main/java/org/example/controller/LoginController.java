@@ -3,7 +3,6 @@ package org.example.controller;
 import org.example.pojo.Result;
 import org.example.pojo.User;
 import org.example.service.impl.LoginServiceImpl;
-import org.example.service.impl.UserServiceImpl;
 import org.example.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,9 +15,6 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private LoginServiceImpl loginServiceImpl;
-
-    @Autowired
-    private UserServiceImpl userServiceImpl;
 
     @Autowired
     RedisTemplate<String, User> redisTemplate;

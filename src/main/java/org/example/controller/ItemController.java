@@ -3,7 +3,6 @@ package org.example.controller;
 import org.example.pojo.Item;
 import org.example.pojo.Result;
 import org.example.service.impl.ItemServiceImpl;
-import org.example.utils.AliOSSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,9 +15,6 @@ public class ItemController {
     @Autowired
     private ItemServiceImpl itemServiceImpl;
 
-    @Autowired
-    private AliOSSUtils aliOSSUtils;
-
     @PostMapping("/api/post/{type}")
     public Result post(@PathVariable("type") String stringType,
                        @RequestPart("name") String name,
@@ -26,9 +22,7 @@ public class ItemController {
                        @RequestPart("description") String description,
                        @RequestPart("location") String location,
                        @RequestPart("image") MultipartFile image) throws IOException {
-        Integer integerType = Integer.valueOf(stringType);
-        String imageUrl = aliOSSUtils.upload(image);
-        itemServiceImpl.post(name, phone, description, location, imageUrl, integerType);
+        itemServiceImpl.post(name, phone, description, location, image, Integer.valueOf(stringType));
         return Result.success();
     }
 

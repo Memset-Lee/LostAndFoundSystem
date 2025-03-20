@@ -26,7 +26,7 @@ public class PostListener {
 
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(name = "post.queue", durable = "true"),
-            exchange = @Exchange(name = "post.direct", type = ExchangeTypes.DIRECT),
+            exchange = @Exchange(name = "post.direct", type = ExchangeTypes.DIRECT, durable = "true"),
             key = "post"
     ))
     public void post(Map<String, Object> message) throws IOException {

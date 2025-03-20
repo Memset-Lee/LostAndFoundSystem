@@ -25,11 +25,8 @@ public class LoginController {
 
     @PostMapping("/api/login")
     public Result login(@RequestBody User user) {
-        Integer num = loginServiceImpl.login(user.getUsername(), user.getPassword());
-        if (num != 0) {
-            String key = user.getUsername();
-            User value = userServiceImpl.personalhome(key);
-            redisTemplate.opsForValue().set(key, value);
+        boolean check = loginServiceImpl.login(user.getUsername(), user.getPassword());
+        if (check) {
             Map<String, Object> map = new HashMap<>();
             map.put("username", user.getUsername());
             return Result.success(JwtUtils.generateJwt(map));

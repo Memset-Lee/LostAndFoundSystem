@@ -4,7 +4,6 @@ import io.jsonwebtoken.Claims;
 import org.example.pojo.Result;
 import org.example.pojo.User;
 import org.example.service.impl.UserServiceImpl;
-import org.example.utils.AliOSSUtils;
 import org.example.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,9 +23,6 @@ public class UserController {
     @Autowired
     private RedisTemplate<String, User> redisTemplate;
 
-    @Autowired
-    private AliOSSUtils aliOSSUtils;
-
     @RequestMapping("/test")
     public Result listUser() {
         List<User> ansList = userServiceImpl.listUser();
@@ -45,8 +41,7 @@ public class UserController {
     public Result personalhome(@RequestHeader String token) {
         Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
-        User user = redisTemplate.opsForValue().get(username);
-        //User user = userServiceImpl.personalhome(username);
+        User user = userServiceImpl.personalhome(username);
         return Result.success(user);
     }
 
@@ -58,11 +53,7 @@ public class UserController {
                          @RequestPart("avatar") MultipartFile newAvatar) throws IOException {
         Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
-        String newAvatarUrl = aliOSSUtils.upload(newAvatar);
-        userServiceImpl.update(username, newUsername, newPassword, newPhone, newAvatarUrl);
-        User newuser = new User(newUsername, newPassword, newPhone, newAvatarUrl);
-        redisTemplate.delete(username);
-        redisTemplate.opsForValue().set(newUsername, newuser);
+        userServiceImpl.update(username, newUsername, newPassword, newPhone, newAvatar);
         Map<String, Object> map = new HashMap<>();
         map.put("username", newUsername);
         return Result.success(JwtUtils.generateJwt(map));

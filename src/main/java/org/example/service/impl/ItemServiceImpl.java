@@ -3,7 +3,6 @@ package org.example.service.impl;
 import org.example.mapper.ItemMapper;
 import org.example.pojo.Item;
 import org.example.service.ItemService;
-import org.example.utils.AliOSSUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,6 @@ import java.util.Map;
 public class ItemServiceImpl implements ItemService {
     @Autowired
     private ItemMapper itemMapper;
-
-    @Autowired
-    private AliOSSUtils aliOSSUtils;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;

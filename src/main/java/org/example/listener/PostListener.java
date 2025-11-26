@@ -34,7 +34,7 @@ public class PostListener {
         String phone = (String) message.get("phone");
         String description = (String) message.get("description");
         String location = (String) message.get("location");
-        Integer type = (Integer) message.get("type");
+        String type = (String) message.get("type");
         String imageBase64 = (String) message.get("image");
         byte[] imageBytes = Base64.getDecoder().decode(imageBase64);
         MultipartFile image = new MockMultipartFile("image", "image.jpg", "image/jpeg", imageBytes);

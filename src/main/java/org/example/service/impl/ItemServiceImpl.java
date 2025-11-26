@@ -3,6 +3,7 @@ package org.example.service.impl;
 import org.example.mapper.ItemMapper;
 import org.example.pojo.Item;
 import org.example.service.ItemService;
+import org.example.utils.AliOSSUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,11 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private AliOSSUtils aliOSSUtils;
+
     @Override
-    public void post(String name, String phone, String description, String location, MultipartFile image, Integer type) throws IOException {
+    public void post(String name, String phone, String description, String location, MultipartFile image, String type) throws IOException {
         Map<String, Object> message = new HashMap<>();
         message.put("name", name);
         message.put("phone", phone);
@@ -41,5 +45,12 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> ListFoundItems() {
         return itemMapper.selectFoundItems();
+    }
+
+    @Override
+    public void delete(Integer id) {
+        String image = itemMapper.selectImageById(id);
+        itemMapper.deleteItem(id);
+        aliOSSUtils.delete(image);
     }
 }

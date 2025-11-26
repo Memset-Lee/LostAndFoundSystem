@@ -10,9 +10,11 @@ import java.util.List;
 
 @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 public interface ItemService {
-    public void post(String name, String phone, String description, String location, MultipartFile image, Integer type) throws IOException;
+    public void post(String name, String phone, String description, String location, MultipartFile image, String type) throws IOException;
 
     public List<Item> ListLostItems();
 
     public List<Item> ListFoundItems();
+
+    public void delete(Integer id);
 }

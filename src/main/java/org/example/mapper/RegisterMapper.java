@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface RegisterMapper {
-    @Insert("insert into [user] values (#{username}, #{password}, null ,'https://tse2-mm.cn.bing.net/th/id/OIP-C.EKJYdJ-gbrKGFyhfiHd1qwHaHa?rs=1&pid=ImgDetMain')")
+    @Insert("insert into [user] values (#{username}, #{password}, null ,'https://lost-and-found-system-bucket.oss-cn-hangzhou.aliyuncs.com/OIP-C.jpg')")
     void insertUser(String username, String password);
 }

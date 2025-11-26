@@ -16,13 +16,13 @@ public class ItemController {
     private ItemServiceImpl itemServiceImpl;
 
     @PostMapping("/api/post/{type}")
-    public Result post(@PathVariable("type") String stringType,
+    public Result post(@PathVariable("type") String type,
                        @RequestPart("name") String name,
                        @RequestPart("phone") String phone,
                        @RequestPart("description") String description,
                        @RequestPart("location") String location,
                        @RequestPart("image") MultipartFile image) throws IOException {
-        itemServiceImpl.post(name, phone, description, location, image, Integer.valueOf(stringType));
+        itemServiceImpl.post(name, phone, description, location, image, type);
         return Result.success();
     }
 
@@ -36,5 +36,11 @@ public class ItemController {
     public Result ListFoundItems() {
         List<Item> ansList = itemServiceImpl.ListFoundItems();
         return Result.success(ansList);
+    }
+
+    @PostMapping("/api/delete")
+    public Result deleteItem(@RequestBody Integer id) {
+        itemServiceImpl.delete(id);
+        return Result.success();
     }
 }

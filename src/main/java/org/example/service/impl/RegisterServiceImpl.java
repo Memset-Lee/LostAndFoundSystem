@@ -12,6 +12,6 @@ public class RegisterServiceImpl implements RegisterService {
 
     @Override
     public void register(String username, String password) {
-        registerMapper.insertUser(username, password);
+        registerMapper.addUser(username, password);
     }
 }

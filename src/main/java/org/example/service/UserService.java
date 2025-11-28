@@ -17,4 +17,8 @@ public interface UserService {
     public User personalhome(String username);
 
     public void update(String username, String newUsername, String newPassword, String newPhone, MultipartFile newAvatar) throws IOException;
+
+    public void logout(String username);
+
+    public void cancel(String username);
 }

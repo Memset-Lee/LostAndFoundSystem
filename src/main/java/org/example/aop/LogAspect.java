@@ -24,7 +24,7 @@ public class LogAspect {
     @Autowired
     private OperateLogMapper operateLogMapper;
 
-    @Around("execution(* org.example.service.UserService.update(..)) || execution(* org.example.service.ItemService.post(..)) || execution(* org.example.service.ItemService.delete(..))")
+    @Around("execution(* org.example.service.ItemService.post(..)) || execution(* org.example.service.ItemService.delete(..))")
     public Object recordLog(ProceedingJoinPoint joinPoint) throws Throwable {
         //获取操作人用户名
         String jwt = request.getHeader("token");
@@ -61,7 +61,7 @@ public class LogAspect {
 
         //记录操作日志
         OperateLog operateLog = new OperateLog(operateUser, operateTime, className, methodName, methodParams, returnValue, costTime);
-        operateLogMapper.insertLog(operateLog);
+        operateLogMapper.addLog(operateLog);
 
         //返回原始目标方法结果
         return result;

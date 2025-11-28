@@ -39,18 +39,18 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> ListLostItems() {
-        return itemMapper.selectLostItems();
+        return itemMapper.getLostItems();
     }
 
     @Override
     public List<Item> ListFoundItems() {
-        return itemMapper.selectFoundItems();
+        return itemMapper.getFoundItems();
     }
 
     @Override
     public void delete(Integer id) {
-        String image = itemMapper.selectImageById(id);
-        itemMapper.deleteItem(id);
+        String image = itemMapper.getImageById(id);
+        itemMapper.deleteItemById(id);
         aliOSSUtils.delete(image);
     }
 }

@@ -63,7 +63,15 @@ public class UserController {
     public Result logout(@RequestHeader String token) {
         Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
-        redisTemplate.delete(username);
+        userServiceImpl.logout(username);
+        return Result.success();
+    }
+
+    @PostMapping("/api/cancel")
+    public Result cancel(@RequestHeader String token) {
+        Claims claims = JwtUtils.parseJwt(token);
+        String username = claims.get("username").toString();
+        userServiceImpl.cancel(username);
         return Result.success();
     }
 }

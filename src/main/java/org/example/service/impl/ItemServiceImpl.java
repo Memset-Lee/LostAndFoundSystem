@@ -38,12 +38,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> ListLostItems() {
+    public List<Item> listLostItems() {
         return itemMapper.getLostItems();
     }
 
     @Override
-    public List<Item> ListFoundItems() {
+    public List<Item> listFoundItems() {
         return itemMapper.getFoundItems();
     }
 

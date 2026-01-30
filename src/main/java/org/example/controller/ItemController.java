@@ -27,14 +27,14 @@ public class ItemController {
     }
 
     @GetMapping("/api/lostitems")
-    public Result ListLostItems() {
-        List<Item> ansList = itemServiceImpl.ListLostItems();
+    public Result listLostItems() {
+        List<Item> ansList = itemServiceImpl.listLostItems();
         return Result.success(ansList);
     }
 
     @GetMapping("/api/founditems")
-    public Result ListFoundItems() {
-        List<Item> ansList = itemServiceImpl.ListFoundItems();
+    public Result listFoundItems() {
+        List<Item> ansList = itemServiceImpl.listFoundItems();
         return Result.success(ansList);
     }
 

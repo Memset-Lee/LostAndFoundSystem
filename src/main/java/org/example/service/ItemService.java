@@ -12,9 +12,9 @@ import java.util.List;
 public interface ItemService {
     public void post(String name, String phone, String description, String location, MultipartFile image, String type) throws IOException;
 
-    public List<Item> ListLostItems();
+    public List<Item> listLostItems();
 
-    public List<Item> ListFoundItems();
+    public List<Item> listFoundItems();
 
     public void delete(Integer id);
 }

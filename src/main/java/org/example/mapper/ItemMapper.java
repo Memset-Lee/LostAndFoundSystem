@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface ItemMapper {
     @Insert("insert into item values (#{name}, #{phone}, #{description}, #{location}, #{imageUrl}, #{type})")
-    void addItem(String name, String phone, String description, String location, String imageUrl, String type);
+    void insertItem(String name, String phone, String description, String location, String imageUrl, String type);
 
     @Select("select id, name, phone, description, location, image, type from item where type = 'lost'")
     List<Item> getLostItems();

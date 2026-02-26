@@ -41,7 +41,7 @@ public class PostListener {
         String imageUrl = null;
         try {
             imageUrl = aliOSSUtils.upload(image);
-            itemMapper.addItem(name, phone, description, location, imageUrl, type);
+            itemMapper.insertItem(name, phone, description, location, imageUrl, type);
         } catch (Exception e) {
             if (imageUrl != null) {
                 aliOSSUtils.delete(imageUrl);

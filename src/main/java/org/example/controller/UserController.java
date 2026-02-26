@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -22,12 +21,6 @@ public class UserController {
 
     @Autowired
     private RedisTemplate<String, User> redisTemplate;
-
-    @RequestMapping("/test")
-    public Result listUser() {
-        List<User> ansList = userServiceImpl.listUser();
-        return Result.success(ansList);
-    }
 
     @GetMapping("/api/home")
     public Result home(@RequestHeader String token) {

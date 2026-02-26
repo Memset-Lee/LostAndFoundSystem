@@ -61,7 +61,7 @@ public class LogAspect {
 
         //记录操作日志
         OperateLog operateLog = new OperateLog(operateUser, operateTime, className, methodName, methodParams, returnValue, costTime);
-        operateLogMapper.addLog(operateLog);
+        operateLogMapper.insertLog(operateLog);
 
         //返回原始目标方法结果
         return result;

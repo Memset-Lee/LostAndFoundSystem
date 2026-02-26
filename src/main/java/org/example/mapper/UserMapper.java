@@ -6,12 +6,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.example.pojo.User;
 
-import java.util.List;
-
 @Mapper
 public interface UserMapper {
-    List<User> selectUser(String username);
-
     @Select("select avatar from [user] where username = #{username}")
     String getAvatarByUsername(String username);
 

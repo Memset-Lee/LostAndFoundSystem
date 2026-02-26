@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -23,11 +22,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private AliOSSUtils aliOSSUtils;
-
-    @Override
-    public List<User> listUser() {
-        return userMapper.selectUser("Alice");
-    }
 
     @Override
     public String home(String username) {

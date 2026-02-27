@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public boolean login(String username, String password) {
-        Integer num = loginMapper.getUserCount(username, password);
+        Integer num = loginMapper.getUserCountByUsernameAndPassword(username, password);
         if (num != 0) {
             boolean exists = Boolean.TRUE.equals(redisTemplate.hasKey(username));
             if (exists == false) {

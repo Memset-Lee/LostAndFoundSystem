@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(String username, String newUsername, String newPassword, String newPhone, MultipartFile newAvatar) throws IOException {
         String newAvatarUrl = null;
-        String oldAvatarUrl = this.personalhome(username).getAvatar();
+        String oldAvatarUrl = userMapper.getAvatarByUsername(username);
         try {
             newAvatarUrl = aliOSSUtils.upload(newAvatar);
             userMapper.updateUser(username, newUsername, newPassword, newPhone, newAvatarUrl);

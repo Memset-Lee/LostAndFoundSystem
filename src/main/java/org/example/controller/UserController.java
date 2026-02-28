@@ -40,10 +40,10 @@ public class UserController {
 
     @PutMapping("/api/update")
     public Result update(@RequestHeader String token,
-                         @RequestPart("username") String newUsername,
-                         @RequestPart("password") String newPassword,
-                         @RequestPart("phone") String newPhone,
-                         @RequestPart("avatar") MultipartFile newAvatar) throws IOException {
+                         @RequestParam("username") String newUsername,
+                         @RequestParam("password") String newPassword,
+                         @RequestParam("phone") String newPhone,
+                         @RequestParam("avatar") MultipartFile newAvatar) throws IOException {
         Claims claims = JwtUtils.parseJwt(token);
         String username = claims.get("username").toString();
         userServiceImpl.update(username, newUsername, newPassword, newPhone, newAvatar);

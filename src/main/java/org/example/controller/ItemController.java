@@ -17,11 +17,11 @@ public class ItemController {
 
     @PostMapping("/api/post/{type}")
     public Result post(@PathVariable("type") String type,
-                       @RequestPart("name") String name,
-                       @RequestPart("phone") String phone,
-                       @RequestPart("description") String description,
-                       @RequestPart("location") String location,
-                       @RequestPart("image") MultipartFile image) throws IOException {
+                       @RequestParam("name") String name,
+                       @RequestParam("phone") String phone,
+                       @RequestParam("description") String description,
+                       @RequestParam("location") String location,
+                       @RequestParam("image") MultipartFile image) throws IOException {
         itemServiceImpl.post(name, phone, description, location, image, type);
         return Result.success();
     }

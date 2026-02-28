@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(String username, String newUsername, String newPassword, String newPhone, MultipartFile newAvatar) throws IOException {
         String newAvatarUrl = null;
-        String oldAvatarUrl = userMapper.getAvatarByUsername(username);
+        String avatarUrl = userMapper.getAvatarByUsername(username);
         try {
             newAvatarUrl = aliOSSUtils.upload(newAvatar);
             userMapper.updateUser(username, newUsername, newPassword, newPhone, newAvatarUrl);
             redisTemplate.delete(username);
-            if (!oldAvatarUrl.equals("https://lost-and-found-system-bucket.oss-cn-hangzhou.aliyuncs.com/avatar.jpg")) {
-                aliOSSUtils.delete(oldAvatarUrl);
+            if (!avatarUrl.equals("https://lost-and-found-system-bucket.oss-cn-hangzhou.aliyuncs.com/avatar.jpg")) {
+                aliOSSUtils.delete(avatarUrl);
             }
         } catch (Exception e) {
             if (newAvatarUrl != null) {
